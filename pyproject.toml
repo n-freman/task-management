@@ -15,11 +15,19 @@ sqlalchemy = {extras = ["asyncio"], version = "^2.0.37"}
 asyncpg = "^0.30.0"
 isort = "^6.0.0"
 python-dotenv = "^1.0.1"
-psycopg2 = "^2.9.10"
 pydantic = "^2.10.6"
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 pyjwt = "^2.10.1"
 bcrypt = "4.0.1"
+pytest = "^8.3.4"
+testcontainers = {extras = ["postgres"], version = "^4.9.1"}
+pytest-asyncio = "^0.25.3"
+psycopg2 = { version = "^2.9", optional = true }
+psycopg2-binary = { version = "^2.9", optional = true }
+
+[tool.poetry.extras]
+mac = ["psycopg2"]
+docker = ["psycopg2-binary"]
 
 
 [build-system]

@@ -28,3 +28,24 @@ poetry install
 uvicorn task_management.main:app
 ```
 
+### Run in docker
+
+```bash
+mv .env.example .env
+mv .env.db.example .env
+```
+
+Fill out .env file & .env.db
+
+```bash
+docker compose up
+```
+
+## Run tests
+
+```bash
+poetry run pytest
+```
+
+P.S. tests are not fully ready yet
+
