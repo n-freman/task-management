@@ -56,9 +56,5 @@ tasks_table = Table(
 
 def start_mappers():
     mapper.map_imperatively(domain.User, users_table)
-    mapper.map_imperatively(domain.Task,
-                            tasks_table,
-                            properties={
-                                'user_': relationship(domain.User)
-                            })
+    mapper.map_imperatively(domain.Task, tasks_table)
 
