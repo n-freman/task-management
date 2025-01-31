@@ -17,7 +17,8 @@ class Task:
     title: str
     description: str
     is_completed: bool
-    user: User
+    user: str
+    priority: int
     created_at: datetime
     updated_at: datetime
 

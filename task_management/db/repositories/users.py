@@ -27,10 +27,9 @@ class UsersRepository(BaseRepository):
     async def get(self, email: str) -> User:
         query = select(users_table).filter(users_table.c.email == email)
         result = await self.session.execute(query)
-        user = result.scalars().first()
+        user = result.fetchone()
 
         if not user:
             raise NoResultFound(f"User with email {email} does not exist")
-
         return user
 

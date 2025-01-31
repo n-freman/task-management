@@ -8,7 +8,7 @@ from task_management.db.schemas import metadata
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
-db_uri = get_db_uri().replace('asyncpg', 'postgresql')
+db_uri = get_db_uri().replace('+asyncpg', '')
 config = context.config
 config.set_main_option("sqlalchemy.url", db_uri)
 
