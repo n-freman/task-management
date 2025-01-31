@@ -6,11 +6,13 @@ from sqlalchemy import (
     Column,
     DateTime,
     ForeignKey,
+    Integer,
     MetaData,
     String,
     Table,
     Text,
     func,
+    CheckConstraint
 )
 from sqlalchemy.orm import properties, registry, relationship
 
@@ -41,12 +43,14 @@ tasks_table = Table(
     Column('title', String(64), nullable=False),
     Column('description', Text),
     Column('is_completed', Boolean, default=False),
+    Column('priority', Integer, default=10),
     Column('created_at', DateTime, nullable=False, server_default=func.now()),
     Column('updated_at',
            DateTime,
            nullable=False,
            server_default=func.now(),
            onupdate=func.now()),
+    CheckConstraint('priority >= 1 AND priority <= 10', name='check_priority_range'),
 )
 
 

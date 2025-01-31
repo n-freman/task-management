@@ -1,6 +1,8 @@
 import uuid
 from datetime import datetime
+from typing import Optional
 
+from sqlalchemy.sql import text
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
@@ -40,8 +42,18 @@ class TasksRepository(BaseRepository):
         )
         await self.session.commit()
 
-    async def get_all_for_user(self, user: User):
+    async def get_all_for_user(self,
+                               user: User,
+                               is_completed: Optional[bool] = None,
+                               sort_by: Optional[str] = None):
         query = select(tasks_table).filter(tasks_table.c.user == user.id)
+
+        if is_completed is not None:
+            query = query.filter(tasks_table.c.is_completed == is_completed)
+
+        if sort_by is not None:
+            query = query.order_by(text(sort_by))
+
         result = await self.session.execute(query)
         tasks = result.scalars().all()
 
