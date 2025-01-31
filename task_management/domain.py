@@ -17,7 +17,7 @@ class Task:
     title: str
     description: str
     is_completed: bool
-    user: User
+    user_: User
     created_at: datetime
     updated_at: datetime
 
