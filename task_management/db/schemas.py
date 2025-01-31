@@ -12,10 +12,12 @@ from sqlalchemy import (
     Text,
     func,
 )
+from sqlalchemy.orm import properties, registry, relationship
 
-from task_management import config
+from task_management import config, domain
 
 metadata = MetaData()
+mapper = registry()
 
 users_table = Table(
     'users',
@@ -46,3 +48,13 @@ tasks_table = Table(
            server_default=func.now(),
            onupdate=func.now()),
 )
+
+
+def start_mappers():
+    mapper.map_imperatively(domain.User, users_table)
+    mapper.map_imperatively(domain.Task,
+                            tasks_table,
+                            properties={
+                                'user': relationship(domain.User)
+                            })
+
