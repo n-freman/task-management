@@ -2,10 +2,10 @@ import uuid
 from datetime import datetime
 from typing import Optional
 
-from sqlalchemy.sql import text
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
+from sqlalchemy.sql import text
 
 from task_management.db.exceptions import NoResultFound
 from task_management.db.schemas import tasks_table, users_table

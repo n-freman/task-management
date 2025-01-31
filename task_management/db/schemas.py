@@ -3,6 +3,7 @@ import uuid
 from sqlalchemy import (
     UUID,
     Boolean,
+    CheckConstraint,
     Column,
     DateTime,
     ForeignKey,
@@ -12,7 +13,6 @@ from sqlalchemy import (
     Table,
     Text,
     func,
-    CheckConstraint
 )
 from sqlalchemy.orm import properties, registry, relationship
 
@@ -59,6 +59,6 @@ def start_mappers():
     mapper.map_imperatively(domain.Task,
                             tasks_table,
                             properties={
-                                'user': relationship(domain.User)
+                                'user_': relationship(domain.User)
                             })
 
