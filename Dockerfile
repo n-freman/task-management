@@ -12,5 +12,5 @@ RUN poetry install --extras "docker" --no-root
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "poetry run alembic upgrade head && poetry run uvicorn task_manager.main:app --host 0.0.0.0 --port 8000"]
+CMD ["sh", "-c", "poetry run alembic upgrade head && poetry run uvicorn task_management.main:app --host 0.0.0.0 --port 8000"]
 
