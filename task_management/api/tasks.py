@@ -1,5 +1,5 @@
 import uuid
-from typing import Annotated, List
+from typing import Annotated, List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.exc import NoResultFound
@@ -9,7 +9,12 @@ from task_management.db.utils import AsyncSession, get_async_session
 from task_management.domain import User
 
 from .auth.utils import JWTBearer
-from .schemas import TaskCreateRequest, TaskDataResponse, TaskUpdateRequest
+from .schemas import (
+    AllowedTaskSortFields,
+    TaskCreateRequest,
+    TaskDataResponse,
+    TaskUpdateRequest,
+)
 
 router = APIRouter(prefix='/tasks', tags=['Task Management'])
 
@@ -32,10 +37,12 @@ async def create_task(
 @router.get('/')
 async def get_current_users_tasks(
     user: Annotated[User, Depends(JWTBearer())],
+    is_completed: Optional[bool] = None,
+    sort_by: Optional[AllowedTaskSortFields] = None,
     session: AsyncSession = Depends(get_async_session)
 ) -> List[TaskDataResponse]:
     tasks_repo = TasksRepository(session)
-    tasks = await tasks_repo.get_all_for_user(user)
+    tasks = await tasks_repo.get_all_for_user(user, is_completed, sort_by)
     return list(map(TaskDataResponse.from_dataclass, tasks))
 
 

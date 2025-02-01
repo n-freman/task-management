@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 
 from pydantic import BaseModel, Field
 
@@ -57,4 +58,15 @@ class TaskDataResponse(BaseModel):
             created_at=task.created_at,
             updated_at=task.updated_at
         )
+
+
+class AllowedTaskSortFields(str, Enum):
+    priority_asc = "priority"
+    priority_desc = "-priority"
+    created_at_asc = "created_at"
+    created_at_desc = "created_at DESC"
+    updated_at_asc = "updated_at"
+    updated_at_desc = "updated_at DESC"
+    title_asc = "title"
+    title_desc = "title DESC"
 
