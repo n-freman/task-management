@@ -30,7 +30,7 @@ class TaskCreateRequest(BaseModel):
 
 
 class TaskUpdateRequest(TaskCreateRequest):
-    id: str
+    pass
 
 
 class UserDataResponse(BaseModel):

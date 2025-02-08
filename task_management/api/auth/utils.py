@@ -59,27 +59,6 @@ def create_refresh_token(data: dict):
     return encoded_jwt
 
 
-async def get_current_user(token: Annotated[str, Depends(HTTPBearer)],
-                           session: Annotated[AsyncSession, Depends(get_async_session)]):
-    try:
-        payload = jwt.decode(token,
-                             config.SECRET_KEY,
-                             algorithms=[config.JWT_ALGORITHM]) # type: ignore
-        email: str = payload.get('email')
-        if email is None:
-            raise credentials_exception
-        expiration_time = payload.get('exp')
-        if expiration_time > datetime.now():
-            raise credentials_exception
-    except InvalidTokenError:
-        raise credentials_exception
-    user_repo = UsersRepository(session)
-    user = await user_repo.get(email)
-    if user is None:
-        raise credentials_exception
-    return user
-
-
 async def get_refresh_token_user(token: str, session: AsyncSession):
     payload = jwt.decode(token,
                          config.REFRESH_TOKEN_SECRET,

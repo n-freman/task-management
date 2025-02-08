@@ -67,14 +67,14 @@ async def get_task(
 @router.put('/{task_id}')
 async def update_task(
     request: TaskUpdateRequest,
+    task_id: str,
     user: Annotated[User, Depends(JWTBearer())],
     session: AsyncSession = Depends(get_async_session)
 ) -> TaskDataResponse:
     try:
         tasks_repo = TasksRepository(session)
         update_data = request.model_dump()
-        update_data.pop('id')
-        task = await tasks_repo.update(request.id, **update_data)
+        task = await tasks_repo.update(task_id, **update_data)
         return TaskDataResponse.from_dataclass(task)
     except NoResultFound as e:
         raise HTTPException(status.HTTP_404_NOT_FOUND,
