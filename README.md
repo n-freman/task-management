@@ -1,5 +1,7 @@
 # Task management system
 
+Project was made for coding interview @ Simurg
+
 This repository contains the implementation of a test task related to a task management system.
 The system allows users to create, update, delete, and track tasks efficiently.
 
